@@ -29,7 +29,6 @@ export async function getUserByUserId(userId){
 
 export async function getSuggestedProfiles(userId, following){
 
-  console.log({userId, following})
   //return await firebase.firestore().collection('users').get()
   // let query = firebase.firestore().collection('users');
 
@@ -77,4 +76,45 @@ export async function updateFollowedUserFollowers(profileDocId, loggedInUserDocI
         ? FieldValue.arrayRemove(loggedInUserDocId)
         : FieldValue.arrayUnion(loggedInUserDocId)
     })
+}
+
+export async function getPhotos(userId, following){
+
+  /**
+   * userId = current user id
+   * following = profiles which current user follows
+   */
+  const result = await firebase
+      .firestore()
+      .collection('photos')
+      .where('userId', 'in', following)
+      .get()
+  
+  //get doc of each photo
+  const userFollowedPhotos = result.docs.map((photo) => ({
+    ...photo.data(),
+    docId: photo.id
+
+  }))
+
+  const photosWithUserDetails = await Promise.all(
+
+    userFollowedPhotos.map(async (photo) => {
+      //check whether current user has liked this photo
+      let userLikedPhoto = false
+
+      if(photo.likes.includes(userId)){
+        userLikedPhoto = true
+      }
+
+      //get profile of the user of each photo
+      const user = await getUserByUserId(photo.userId)
+      //destructure because returns array
+      const { username } = user[0]
+
+      return { username, ...photo, userLikedPhoto }
+    })
+  )
+
+  return photosWithUserDetails
 }
