@@ -2,6 +2,9 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+ #getting started 
+clone repository run npm install run npm start If you want to use as a separate project, you will have to set up a firebase project
+
 ## Available Scripts
 
 In the project directory, you can run:
