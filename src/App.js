@@ -4,6 +4,9 @@ import * as ROUTES from './constants/routes'
 import './styles/app.css' 
 import useAuthListener from './hooks/use-auth-listener'
 import UserContext from './context/user'
+import ProtectedRoute from './helpers/protected-route';
+import isLoggedIn from './helpers/is-logged-in';
+import Profile from './pages/profile';
 //import ReactDOM from 'react-dom';
 
 const Login = lazy(() => import ('./pages/login'))
@@ -18,14 +21,21 @@ function App() {
   return (
     <UserContext.Provider value = {{ user }}>
       <Router>
-        <Switch>
-          <Suspense fallback={<p>Loading...</p>}>
-            <Route path={ROUTES.LOGIN} component={ Login } exact/>
-            <Route path={ROUTES.SIGN_UP} component={ Signup } exact />
-            <Route path={ROUTES.DASHBOARD} component={ Dashboard } exact />
+        <Suspense fallback={<p>Loading...</p>}>
+          <Switch>
+            <isLoggedIn user={user} loggedInPath={ROUTES.DASHBOARD} path={ROUTES.LOGIN} exact>
+              <Login/>
+            </isLoggedIn>
+            <isLoggedIn user={user} loggedInPath={ROUTES.DASHBOARD} path={ROUTES.SIGN_UP} exact>
+              <Signup/>
+            </isLoggedIn>
+            <ProtectedRoute user={user} path={ROUTES.DASHBOARD} exact>
+              <Dashboard />
+            </ProtectedRoute>
+            <Route path={ROUTES.PROFILE} exact component={Profile} />
             <Route component={ NotFound } />
-          </Suspense>
-        </Switch>
+          </Switch>
+        </Suspense>
       </Router>
     </UserContext.Provider>
   );
