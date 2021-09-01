@@ -40,7 +40,16 @@ export default function Actions({ docId, totalLikes, likedPhoto, handleFocus}){
                     className='w-8 mr-4 select-none cursor-pointer'
                     src={toggleLiked ? '/images/assets/heart-filled.png' : '/images/assets/heart.png'}
                     />
-                    <img src='/images/assets/comment.png' 
+                    
+                    {/* comment icon */}
+                    <img 
+                        onClick={handleFocus}
+                        onKeyDown={(e) => {
+                            if(e.key === 'Enter'){
+                                handleFocus()
+                            }
+                        }}
+                        src='/images/assets/comment.png' 
                         className="w-8 mr-4 select-none cursor-pointer" />
                 </div>
             </div>
