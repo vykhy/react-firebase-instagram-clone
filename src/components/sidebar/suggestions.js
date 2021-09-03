@@ -16,7 +16,7 @@ export default function Suggestions({ userId, following, loggedInUserDocId }){
         if(userId){
             suggestedProfiles()
         }else{
-            console.log('no userID')
+            let a = 0
         }
     }, [userId])
 

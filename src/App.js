@@ -6,12 +6,12 @@ import useAuthListener from './hooks/use-auth-listener'
 import UserContext from './context/user'
 import ProtectedRoute from './helpers/protected-route';
 import isLoggedIn from './helpers/is-logged-in';
-import Profile from './pages/profile';
 //import ReactDOM from 'react-dom';
 
 const Login = lazy(() => import ('./pages/login'))
 const Signup = lazy(() => import ('./pages/signup'))
 const NotFound = lazy(() => import ('./pages/not-found'))
+const Profile = lazy(() => import ('./pages/profile'))
 const Dashboard = lazy(() => import ('./pages/dashboard'))
 
 function App() {

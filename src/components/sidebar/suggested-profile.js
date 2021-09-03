@@ -27,7 +27,7 @@ export default function SuggestedProfile(
                     src={`/images/avatars/${username}.jpg`}
                     alt='user'
                 />
-                <Link to={`/p/${username}.jpg`}>
+                <Link to={`/p/${username}`}>
                     <p className='font-bold text-sm'>{username}</p>
                 </Link>
             </div>
