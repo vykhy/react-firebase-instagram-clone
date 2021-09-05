@@ -5,6 +5,10 @@ import FirebaseContext from '../context/firebase'
 import UserContext from '../context/user'
 import * as ROUTES from '../constants/routes'
 
+/**
+ * 
+ * @returns application header component with-> home, logout/login, buttons
+ */
 export default function Header(){
 
     const { firebase } = useContext(FirebaseContext)

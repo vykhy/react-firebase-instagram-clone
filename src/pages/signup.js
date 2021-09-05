@@ -10,19 +10,24 @@ export default function Signup(){
 const history = useHistory()
 const { firebase } = useContext(FirebaseContext)
 
+//username, fullname, email and password input fields
 const [username, setUsername] = useState('')
 const [fullName, setfullName] = useState('')
-
 const [emailAdress, setEmailAddress] = useState('')
 const [password, setPassword] = useState('')
 
 const [error, setErrror] = useState('')
+
+//invalid if email or password is empty
 const isInvalid = password === '' || emailAdress === ''
 
 const handleSignup = async (e) => {
   e.preventDefault()
 
+  //check if username already exists
   const userNameExists = await doesUsernameExist(username)
+
+  //if username doesn't already exist //we don't want duplicate usernames
   if(userNameExists.length === 0){
     try{
         const createdUserResult = await firebase

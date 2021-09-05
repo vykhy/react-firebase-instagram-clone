@@ -3,6 +3,10 @@ import useUser from '../../hooks/use-user'
 import User from './user'
 import Suggestions from './suggestions'
 
+/**
+ * 
+ * @returns current user profile and a list of suggestions of accounts to follow
+ */
 export default function SideBar() {
     const {
          user: { docId, fullName, username, userId, following }

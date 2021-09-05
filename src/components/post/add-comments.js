@@ -3,6 +3,10 @@ import PropTypes from 'prop-types'
 import FirebaseContext from '../../context/firebase'
 import UserContext from '../../context/user'
 
+/**
+ * 
+ * @returns component to add new comment to a post
+ */
 export default function AddComment({ docId, comments, setComments, commentInput }){
 
     //value of comment box

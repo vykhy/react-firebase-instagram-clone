@@ -20,19 +20,31 @@ export default function Header(
         }
     }){
 
+    //state of whether current user is following the currently viewed profile
     const [isFollowingProfile, setIsFollowingProfile] = useState(false)
+
+    //current user
     const { user } = useUser()
+
+    //show button if currently viewed profile is not current user's profile
     const activeBtnFollow = user?.username && user.username !== profileUsername
     
+    //toggle following and not following both in firebase and in UI
     const handleToggleFollow = async () => {
+
+        //toggle following state
         setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile)
+
+        //update UI
         setFollowerCount({
             followerCount: isFollowingProfile ? followerCount - 1 : followerCount + 1
         })
 
+        //call firebase service to toggle following
         await toggleFollow(isFollowingProfile, user.docId, profileDocId, profileUserId, user.userId)
     }
 
+    //get whether current user is following the profile on initial profile load || another profile viewed
     useEffect(() => {
         const isLoggedInUserFollowingProfile = async() => {
             const isFollowing = await isUserFollowingProfile(user.username, profileUserId)
@@ -98,7 +110,6 @@ export default function Header(
     )
 }
 
-    //9:37:02
 
 Header.propTypes = {
     followerCount: PropTypes.number.isRequired,

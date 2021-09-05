@@ -3,6 +3,10 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Skeleton from 'react-loading-skeleton'
 
+/**
+ * 
+ * @returns component with current user's photo , username and link to profile
+ */
 const User = ({ username, fullName }) => (
 
     !username || !fullName ? (

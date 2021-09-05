@@ -4,17 +4,24 @@ import FirebaseContext from '../../context/firebase'
 import UserContext from '../../context/user'
 
 export default function Actions({ docId, totalLikes, likedPhoto, handleFocus}){
+
+    //current user
     const {
         user: {uid: userId = ''}
     } = useContext(UserContext)
 
+    //toggle between like and unlike
     const [toggleLiked, setToggleLiked] = useState(likedPhoto)
+    //post's like count and to update it
     const [likes, setLikes] = useState(totalLikes)
+    //get firebase
     const { firebase, FieldValue } = useContext(FirebaseContext)
 
+    //function to toggle like in UI, and update database
     const handleToggleLiked = async() => {
         setToggleLiked((toggleLiked) => !toggleLiked)
 
+        //update firestore database
         await firebase.firestore()
             .collection('photos')
             .doc(docId)
@@ -23,6 +30,7 @@ export default function Actions({ docId, totalLikes, likedPhoto, handleFocus}){
                 FieldValue.arrayUnion(userId)
             })
 
+        //update like count
         setLikes((likes) => (toggleLiked ? likes - 1 : likes + 1))
 
     }

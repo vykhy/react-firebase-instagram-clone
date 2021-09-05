@@ -6,6 +6,9 @@ import Actions from './actions'
 import Footer from './footer'
 import Comments from './comments'
 
+/**
+ * @returns a wrapper component of a post with header, image, footer, actions, likes and comments
+ */
 export default function Post({ content }){
 
     const commentInput = useRef(null)

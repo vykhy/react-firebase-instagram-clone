@@ -2,6 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
+/**
+ * @returns section above a photo with username, userphoto and link to user profile
+ */
 export default function Header({ username }){
 
     return (

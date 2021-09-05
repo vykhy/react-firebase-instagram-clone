@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+/**
+ * @returns section below a photo with username and caption
+ */
 export default function Footer({ caption, username }){
 
     return(

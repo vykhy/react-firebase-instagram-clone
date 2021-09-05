@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Route, Redirect } from 'react-router'
 
+
 export default function isLoggedIn({ user, loggedInPath, children, ...rest }){
     return (
         <Route

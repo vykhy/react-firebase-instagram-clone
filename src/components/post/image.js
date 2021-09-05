@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+/**
+ * @returns image component of a post
+ */
 export default function Image({ src, caption }){
 
     return(

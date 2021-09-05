@@ -5,23 +5,31 @@ import Photos from './photos';
 import { getUserPhotosByUserId } from '../../services/firebase';
 
 export default function Profile({ user }) {
+
+  //useReducer function
   const reducer = (state, newState) => ({ ...state, ...newState });
+
+  //useReducer param
   const initialState = {
     profile: {},
     photosCollection: null,
     followerCount: 0
   };
 
+  //set initial values for the profile
   const [{ profile, photosCollection, followerCount }, dispatch] = useReducer(
     reducer,
     initialState
   );
 
+  //get real values from database and update useReducer state
   useEffect(() => {
     async function getProfileInfoAndPhotos() {
       const photos = await getUserPhotosByUserId(user.userId);
-      dispatch( {profile: user, photosCollection: photos, followerCount: user.followers.length });
+      dispatch( {profile: user, photosCollection: photos, followerCount: user.followers ? user.followers.length : 0 });
     }
+
+    //run only if logged in user
     if(user.username){
         getProfileInfoAndPhotos();
     }

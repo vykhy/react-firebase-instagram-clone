@@ -6,10 +6,12 @@ export default function Photos( { photos } ){
 
 
     return(
-        <div className="h-16 border-t border-gray-primary mt-12 pt-4">
-            <div className='grid grid-cols-3 gap-8 mt-4 mb-12'>
+        <div className="container mx-auto h-16 border-t border-gray-primary mt-12 pt-4">
+            <div className='grid grid-cols-3 gap-4 mt-4 mb-12'>
                 {!photos ? (
-                    <Skeleton count={12} width={320} height="400" />
+                    <div>
+                        <Skeleton count={12} height={400} className="w-6" />
+                    </div>
                 ) : (
                     photos.map(photo => (
                         <div className="relative group" key={photo.docId}>
@@ -17,7 +19,7 @@ export default function Photos( { photos } ){
 
                             <div className="absolute bottom-0 left-0 bg-gray-200 
                                 z-10 w-full justify-evenly items-center h-full 
-                                bg-black-faded group-hover:flex">
+                                bg-black-faded group-hover:flex hidden">
                                 <p className='flex items-center text-white font-bold'>
                                     <svg 
                                         xmlns="https://www.w3.org/2000/svg" 
@@ -46,16 +48,22 @@ export default function Photos( { photos } ){
                                         clipRule="evenodd"
                                     />
                                     </svg>
+                                    {photo.comments.length}
                                 </p>
                             </div>
                         </div>
                     ))
                 ) }
             </div>
+        {!photos || (photos.length === 0 && 
+            <p className="text-center text-2xl">
+                No Posts Yet
+            </p>
+        )}
         </div>
     )
 }
 
 Photos.propTypes = {
-    photos: PropTypes.array.isRequired
+    photos: PropTypes.array
 }

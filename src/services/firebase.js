@@ -1,6 +1,7 @@
 import { func } from 'prop-types'
 import { firebase, FieldValue } from '../lib/firebase'
 
+//returns whether a username already exists
 export async function doesUsernameExist(username){
     const result = await firebase
       .firestore()
@@ -11,7 +12,7 @@ export async function doesUsernameExist(username){
     return result.docs.map((user) => user.data().length > 0)
 }
 
-//get user from firestore where userid i equal to uerid from current auth
+//get user from firestore where userid is equal to uerid from current auth
 export async function getUserByUserId(userId){
   const result = await firebase
     .firestore()
@@ -27,6 +28,7 @@ export async function getUserByUserId(userId){
   return user
 }
 
+//return full user data by taking in a username
 export async function getUserByUsername(username){
   const result = await firebase
     .firestore()
@@ -40,6 +42,7 @@ export async function getUserByUsername(username){
     }))
 }
 
+//returns a list of profiles to suggest to follow, who are not being followed yet
 export async function getSuggestedProfiles(userId, following){
 
   //return await firebase.firestore().collection('users').get()
@@ -67,6 +70,7 @@ export async function getSuggestedProfiles(userId, following){
     !following.includes(profile.userId))
 }
 
+//toggle(add or delete) profile from current user's following list when follow button clicked
 export async function updateLoggedInUserFollowing(loggedInUserDocId,profileId, isFollowingProfile){
 
   return firebase.firestore().collection('users')
@@ -78,6 +82,7 @@ export async function updateLoggedInUserFollowing(loggedInUserDocId,profileId, i
   })
 }
 
+//toggle(add or delete) profile from profile' follower's list when follow button clicked
 export async function updateFollowedUserFollowers(profileDocId, loggedInUserDocId,isFollowingProfile){
 
   return firebase
@@ -94,9 +99,12 @@ export async function updateFollowedUserFollowers(profileDocId, loggedInUserDocI
 export async function getPhotos(userId, following){
 
   /**
+   * returns photos of profile followed by current user along with caption, likes, comments and other details
    * userId = current user id
    * following = profiles which current user follows
    */
+
+  //first get photos from followed profiles
   const result = await firebase
       .firestore()
       .collection('photos')
@@ -110,6 +118,7 @@ export async function getPhotos(userId, following){
 
   }))
 
+  //get additional details and return
   const photosWithUserDetails = await Promise.all(
 
     userFollowedPhotos.map(async (photo) => {
@@ -132,6 +141,8 @@ export async function getPhotos(userId, following){
   return photosWithUserDetails
 }
 
+
+//get all photos by a user by taking in their id
 export async function getUserPhotosByUserId(userId){
 
   const result = await firebase
@@ -146,6 +157,7 @@ export async function getUserPhotosByUserId(userId){
   }))
 }
 
+//returns whether a profile is being followed by current user
 export async function isUserFollowingProfile(currentUserUsername, profileUserId){
   const result = await firebase.firestore()
       .collection('users')
@@ -161,7 +173,14 @@ export async function isUserFollowingProfile(currentUserUsername, profileUserId)
   return response.userId 
 }
 
-export async function toggleFollow(isFollowingProfile, activeUserDocId, profileDocId, profileUserId, followingUserId){
+//toggle between following and not following a user
+export async function toggleFollow(
+  isFollowingProfile,       //whether being followed currently
+  activeUserDocId,          //docId of current user
+  profileDocId,             //docId of target profile
+  profileUserId,            //UserId of target profile
+  followingUserId)          //userId of current user
+{
   await updateLoggedInUserFollowing(activeUserDocId, profileUserId, isFollowingProfile)
   await updateFollowedUserFollowers(profileDocId, followingUserId, isFollowingProfile)
 }

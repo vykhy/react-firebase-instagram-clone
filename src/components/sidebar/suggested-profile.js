@@ -7,8 +7,10 @@ export default function SuggestedProfile(
     { profileDocId: profileDocId, username, profileId, userId, loggedInUserDocId }
 ){
 
+    //toggle whether this profile is being currently followed
     const [followed, setfollowed] = useState(false)
 
+    //update state, UI and firestore db when followed/unfollowed
     async function handleFollowUser(){
         setfollowed(true)
 
@@ -20,6 +22,7 @@ export default function SuggestedProfile(
     }
 
     return !followed ? (
+        // suggested profile image and name
         <div className='flex flex-row items-center align-item justify-between'>
             <div className='flex items-center justify-between'>
                 <img 
@@ -27,10 +30,12 @@ export default function SuggestedProfile(
                     src={`/images/avatars/${username}.jpg`}
                     alt='user'
                 />
+                {/* link to suggested profile */}
                 <Link to={`/p/${username}`}>
                     <p className='font-bold text-sm'>{username}</p>
                 </Link>
             </div>
+            {/* button to follow suggested profile */}
               <button className='text-sm font-bold text-blue-medium'
                 type='button'
                 onClick={() => handleFollowUser() }

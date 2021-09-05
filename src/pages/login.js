@@ -9,22 +9,30 @@ export default function Login(){
 const history = useHistory()
 const { firebase } = useContext(FirebaseContext)
 
+//email and password input fields
 const [emailAdress, setEmailAddress] = useState('')
 const [password, setPassword] = useState('')
 
-const [error, setErrror] = useState('')
+//if error
+const [error, setError] = useState('')
+
+//invalid if email or password is empty
 const isInvalid = password === '' || emailAdress === ''
 
+//handle user login
 const handleLogin = async (e) => {
   e.preventDefault()
   try{
+    //update firebase auth
     await firebase.auth().signInWithEmailAndPassword(emailAdress, password)
+    //redirect to dashboard
     history.push(ROUTES.DASHBOARD)
-  } 
+  }
+  //empty input fields and set error
   catch(error){
     setEmailAddress('')
     setPassword('')
-    setErrror(error.message)
+    setError(error.message)
   }
 }
 

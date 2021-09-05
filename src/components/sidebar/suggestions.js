@@ -4,10 +4,15 @@ import Skeleton from 'react-loading-skeleton'
 import { getSuggestedProfiles } from '../../services/firebase'
 import SuggestedProfile from './suggested-profile'
 
+/**
+ * @returns component with list of suggested profiles
+ */
 export default function Suggestions({ userId, following, loggedInUserDocId }){
 
+    //list of suggested profiles
     const [profiles, setprofiles] = useState(null)
 
+    //get suggested profiles from firebase services if a user is logged in
     useEffect(() => {
         async function suggestedProfiles(){
             const response = await getSuggestedProfiles(userId, following)
