@@ -67,7 +67,7 @@ export default function Header(){
                                 </svg>
                             </button>
                             <div className='flex item-center cursor-pointer'>
-                                <Link to={`p/${user.diplayName}`} >
+                                <Link to={`/p/${user.displayName}`} >
                                     <img className='rounded-full h-8 w-8 flex'
                                     src = {`/images/avatars/${user.displayName}.jpg`}
                                     alt = {`${user.displayName} profile`}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useEffect, useContext } from 'react'
+import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Skeleton from 'react-loading-skeleton'
 import useUser from '../../hooks/use-user'
@@ -94,7 +94,7 @@ export default function Header(
                                 {` `}{followers.length === 1 ? 'follower': 'followers'}
                             </p>
                             <p className="mr-10">
-                                <span className='font-bold'>{following.length} </span>
+                                <span className='font-bold'>{following.length}</span> following
                             </p>
                         </>
                     )}

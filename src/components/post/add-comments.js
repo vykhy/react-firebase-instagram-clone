@@ -25,7 +25,7 @@ export default function AddComment({ docId, comments, setComments, commentInput 
         e.preventDefault();
         
         //set comments array as old plus new comment for ui
-        setComments([{ displayName, comment }, ...comments])
+        setComments([...comments, { displayName, comment }])
         setComment('')
 
         //update firestore

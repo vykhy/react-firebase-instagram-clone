@@ -1,5 +1,5 @@
 import React, { useState, useContext,useEffect } from 'react'
-import { useHistory, useParams } from 'react-router'
+import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
 import FirebaseContext  from '../context/firebase'
 import * as ROUTES from '../constants/routes'
@@ -80,6 +80,7 @@ useEffect(() => {
             Sign up 
           </h1>
         </div>
+        
         {error && <p className="mb-4 text-xs text-red-primary">{error}</p>}
 
         <form onSubmit={handleSignup} method='post'>
@@ -122,14 +123,14 @@ useEffect(() => {
           ${isInvalid && 'opacity-50'}`}
           >Sign up</button>
         </form>
-      </div>
-      <div className='flex justify-center mt-2 rounded items-center flex-col w-full bg-white border-gray-primary'>
-        <p className='text-sm'>
-          Have an account? {` `}
-          <Link to={ROUTES.LOGIN} className='font-bold text-blue-medium'>
-            Login
-          </Link>
-        </p>
+        <div className='flex justify-center mt-2 rounded items-center flex-col w-full bg-white border-gray-primary'>
+          <p className='text-sm'>
+            Have an account? {` `}
+            <Link to={ROUTES.LOGIN} className='font-bold text-blue-medium'>
+              Login
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   )

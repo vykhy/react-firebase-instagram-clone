@@ -1,4 +1,3 @@
-import { func } from 'prop-types'
 import { firebase, FieldValue } from '../lib/firebase'
 
 //returns whether a username already exists

@@ -5,7 +5,7 @@ import './styles/app.css'
 import useAuthListener from './hooks/use-auth-listener'
 import UserContext from './context/user'
 import ProtectedRoute from './helpers/protected-route';
-import isLoggedIn from './helpers/is-logged-in';
+import IsLoggedIn from './helpers/is-logged-in';
 //import ReactDOM from 'react-dom';
 
 const Login = lazy(() => import ('./pages/login'))
@@ -23,12 +23,12 @@ function App() {
       <Router>
         <Suspense fallback={<p>Loading...</p>}>
           <Switch>
-            <isLoggedIn user={user} loggedInPath={ROUTES.DASHBOARD} path={ROUTES.LOGIN} exact>
+            <IsLoggedIn user={user} loggedInPath={ROUTES.DASHBOARD} path={ROUTES.LOGIN} exact>
               <Login/>
-            </isLoggedIn>
-            <isLoggedIn user={user} loggedInPath={ROUTES.DASHBOARD} path={ROUTES.SIGN_UP} exact>
+            </IsLoggedIn>
+            <IsLoggedIn user={user} loggedInPath={ROUTES.DASHBOARD} path={ROUTES.SIGN_UP} exact>
               <Signup/>
-            </isLoggedIn>
+            </IsLoggedIn>
             <ProtectedRoute user={user} path={ROUTES.DASHBOARD} exact>
               <Dashboard />
             </ProtectedRoute>

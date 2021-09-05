@@ -1,5 +1,5 @@
 import React, { useState, useContext,useEffect } from 'react'
-import { useHistory, useParams } from 'react-router'
+import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
 import FirebaseContext  from '../context/firebase'
 import * as ROUTES from '../constants/routes'
@@ -75,14 +75,14 @@ useEffect(() => {
           ${isInvalid && 'opacity-50'}`}
           >Log in</button>
         </form>
-      </div>
-      <div className='flex justify-center mt-2 rounded items-center flex-col w-full bg-white border-gray-primary'>
-        <p className='text-sm'>
-          Dont have an account? 
-          <Link to={ROUTES.SIGN_UP} className='font-bold text-blue-medium'>
-            Sign Up
-          </Link>
-        </p>
+        <div className='flex justify-center mt-2 rounded items-center flex-col w-full bg-white border-gray-primary'>
+          <p className='text-sm'>
+            Dont have an account? 
+            <Link to={ROUTES.SIGN_UP} className='font-bold text-blue-medium'>
+              Sign Up
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   )
