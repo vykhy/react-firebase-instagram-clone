@@ -20,7 +20,6 @@ export default function Photos( { photos } ){
 
     async function getuserinfo(){
         let [userl] = await getUserByUserId(popup.photo.userId)
-        console.log(popup.photo)
         setusername(userl.username)
     }
 
@@ -32,10 +31,13 @@ export default function Photos( { photos } ){
                 let userLikedPhoto = false
             
                 if(popup.photo.likes.includes(user.uid)){
-                userLikedPhoto = true
+                    console.log(user.uid)
+                    console.log(popup.photo.likes)
+                    userLikedPhoto = true
                 }        
                 setPopup({popup: true, photo: { username: username, ...popup.photo, userLikedPhoto }}
                 )
+                console.log(userLikedPhoto)
 
             }
         }

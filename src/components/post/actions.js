@@ -10,6 +10,7 @@ export default function Actions({ docId, totalLikes, likedPhoto, handleFocus}){
         user: {uid: userId = ''}
     } = useContext(UserContext)
 
+    console.log(likedPhoto)
     //toggle between like and unlike
     const [toggleLiked, setToggleLiked] = useState(likedPhoto)
     //post's like count and to update it
@@ -39,7 +40,7 @@ export default function Actions({ docId, totalLikes, likedPhoto, handleFocus}){
         <div>
              <div className='flex justify-between p-4'>
                 <div className='flex'>
-                    <img onClick={ handleToggleLiked } 
+                    <img onClick={()=> handleToggleLiked } 
                     onKeyDown={(e) => {
                         if(e.key === 'Enter'){
                             handleToggleLiked()

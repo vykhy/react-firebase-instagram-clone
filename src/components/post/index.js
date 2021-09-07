@@ -13,6 +13,7 @@ export default function Post({ content }){
 
     const commentInput = useRef(null)
 
+    console.log(content.userLikedPhoto)
     const handleFocus = () => commentInput.current.focus()
 
     //components->//header, image, actions(like & comment), footer, comments
@@ -45,8 +46,8 @@ Post.propTypes = {
         username: PropTypes.string.isRequired,
         imageSrc: PropTypes.string.isRequired,
         caption: PropTypes.string.isRequired,
-        docId: PropTypes.string,
-        userLikedPhoto: PropTypes.bool,
+        docId: PropTypes.string.isRequired,
+        userLikedPhoto: PropTypes.bool.isRequired,
         likes: PropTypes.array.isRequired,
         comments: PropTypes.array.isRequired,
         dateCreated: PropTypes.number.isRequired,
