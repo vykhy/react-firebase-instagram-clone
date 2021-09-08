@@ -13,6 +13,7 @@ const Signup = lazy(() => import ('./pages/signup'))
 const NotFound = lazy(() => import ('./pages/not-found'))
 const Profile = lazy(() => import ('./pages/profile'))
 const Dashboard = lazy(() => import ('./pages/dashboard'))
+const AddPost = lazy(() => import('./pages/add-post'))
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
       <Router>
         <Suspense fallback={<p>Loading...</p>}>
           <Switch>
+            {/* return to dashboard if already logged in */}
             <IsLoggedIn user={user} loggedInPath={ROUTES.DASHBOARD} path={ROUTES.LOGIN} exact>
               <Login/>
             </IsLoggedIn>
@@ -31,6 +33,9 @@ function App() {
             </IsLoggedIn>
             <ProtectedRoute user={user} path={ROUTES.DASHBOARD} exact>
               <Dashboard />
+            </ProtectedRoute>
+            <ProtectedRoute user={user} path={ROUTES.ADD_POST} exact>
+              <AddPost />
             </ProtectedRoute>
             <Route path={ROUTES.PROFILE} exact component={Profile} />
             <Route component={ NotFound } />
