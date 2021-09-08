@@ -1,26 +1,34 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import FirebaseContext from '../../context/firebase'
 import UserContext from '../../context/user'
 
-export default function Actions({ docId, totalLikes, likedPhoto, handleFocus}){
+export default function Actions({ docId, totalLikes, likedPhoto,
+     handleFocus }){
 
     //current user
     const {
         user: {uid: userId = ''}
     } = useContext(UserContext)
 
-    console.log(likedPhoto)
     //toggle between like and unlike
-    const [toggleLiked, setToggleLiked] = useState(likedPhoto)
+    const [toggleLiked, setToggleLiked] = useState(false)
     //post's like count and to update it
     const [likes, setLikes] = useState(totalLikes)
     //get firebase
     const { firebase, FieldValue } = useContext(FirebaseContext)
 
+    useEffect(() => {
+        if(likedPhoto === true){
+            setToggleLiked(true)
+        }
+       
+    }, [])
+
     //function to toggle like in UI, and update database
     const handleToggleLiked = async() => {
         setToggleLiked((toggleLiked) => !toggleLiked)
+
 
         //update firestore database
         await firebase.firestore()
@@ -31,6 +39,11 @@ export default function Actions({ docId, totalLikes, likedPhoto, handleFocus}){
                 FieldValue.arrayUnion(userId)
             })
 
+        // setPhotoWithDetails && setPhotoWithDetails(photoWithDetails.map((photo) => {
+        //     if(photo.photoId == photoId){             
+        //         setPhotoWithDetails(...photo, photo.userLikedPhoto = !userLikedPhoto || true)
+        //     }
+        // }))
         //update like count
         setLikes((likes) => (toggleLiked ? likes - 1 : likes + 1))
 
@@ -40,9 +53,9 @@ export default function Actions({ docId, totalLikes, likedPhoto, handleFocus}){
         <div>
              <div className='flex justify-between p-4'>
                 <div className='flex'>
-                    <img onClick={()=> handleToggleLiked } 
+                    <img onClick={handleToggleLiked } 
                     onKeyDown={(e) => {
-                        if(e.key === 'Enter'){
+                        if(e.key === 'Enter'){()=>
                             handleToggleLiked()
                         }
                     }}
@@ -76,5 +89,7 @@ Actions.propTypes = {
     docId: PropTypes.string.isRequired,
     totalLikes: PropTypes.number.isRequired,
     likedPhoto: PropTypes.bool.isRequired,
-    handleFocus: PropTypes.func.isRequired
+    handleFocus: PropTypes.func.isRequired,
+    setPhotoWithDetails: PropTypes.func,
+    photoId:PropTypes.string
 }

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import Post from '../post/index'
 import PropTypes from 'prop-types'
 import Skeleton from 'react-loading-skeleton'
@@ -9,41 +8,72 @@ import { getUserByUserId } from '../../services/firebase'
 
 export default function Photos( { photos } ){
 
-    const [username, setusername] = useState('')
-
-    const [popup, setPopup] = useState({
-        popup:false,
-        photo: null
-    })
-
-    const { user } = useContext(UserContext)
-
-    async function getuserinfo(){
-        let [userl] = await getUserByUserId(popup.photo.userId)
-        setusername(userl.username)
-    }
+    //list of photos
+    //we need to copy because we have to get additional data whether current user has liked a post
+    const [photoList, setphotoList] = useState(null)
 
     useEffect(() => {
-        async function getData(){
-            if(popup.popup && !popup.photo.userLikedPhoto){
-                getuserinfo()
-        
+        setphotoList(photos)
+    }, [])
+    //track whether popup is active
+    const [popup, setPopup] = useState({
+        popup:false,
+        photo: null,
+    })
+
+    //current user -> needed for info on togglelike
+    const { user: uid } = useContext(UserContext)
+
+    useEffect(() => {
+
+        //close popup in case user clicks another profile
+        setPopup({popup:false, photo:null})
+        //get photo username and whether current user has liked that photo
+        async function updatePhotoDetails(){
+            const photosWithUserDetails = await Promise.all(
+
+                photos.map(async (photo) => {
+                //check whether current user has liked this photo
                 let userLikedPhoto = false
             
-                if(popup.photo.likes.includes(user.uid)){
-                    console.log(user.uid)
-                    console.log(popup.photo.likes)
+                if(photo.likes.includes(uid.uid)){
                     userLikedPhoto = true
-                }        
-                setPopup({popup: true, photo: { username: username, ...popup.photo, userLikedPhoto }}
-                )
-                console.log(userLikedPhoto)
-
-            }
+                }
+            
+                //get profile of the user of each photo
+                const user = await getUserByUserId(photo.userId)
+                //destructure because returns array
+                const { username } = user[0]
+            
+                return { username, ...photo, userLikedPhoto }
+                })
+            )
+            setphotoList(photosWithUserDetails)
         }
-        getData()
+
+        uid && photos && updatePhotoDetails()
+    }, [photos, uid])
+    
+    //console.log(photoList)
+    // async function getuserinfo(){
+    //     let [userl] = await getUserByUserId(popup.photo.userId)
+    //     setusername(userl.username)
+    // }
+    //
+    // useEffect(() => {
+    //     async function getData(){
+    //         if(popup.popup && !popup.photo.userLikedPhoto){
+    //             getuserinfo()
+
+    //             setPopup({popup: true, photo: { username: username,userLikedPhoto: userLikedPhoto, ...popup.photo, }}
+    //             )
+    //             console.log(popup)
+
+    //         }
+    //     }
+    //     getData()
         
-    }, [popup.photo])
+    // }, [popup.photo])
 
     function handlePopup (photo) {
         setPopup({popup: !popup.popup,
@@ -53,12 +83,12 @@ export default function Photos( { photos } ){
     return(
         <div className="container mx-auto h-16 border-t border-gray-primary mt-12 pt-4">
             <div className='grid grid-cols-3 gap-4 mt-4 mb-12'>
-                {!photos ? (
+                {!photoList ? (
                     <div>
                         <Skeleton count={12} height={400} className="w-6" />
                     </div>
                 ) : (
-                    photos.map(photo => (
+                    photoList.map(photo => (
                         <div className="relative group" key={photo.docId}>
                             <img src={photo.imageSrc} alt={photo.caption}  />   
                             <div className="absolute bottom-0 left-0 bg-gray-200 
@@ -100,10 +130,20 @@ export default function Photos( { photos } ){
                 ) }
                 {
                     popup.popup ? (
-                    <div className="fixed top-0 left-0 w-screen min-h-screen max-h-full overflow-y-scroll">
-                        <div className='w-3/5 mx-auto bg-white'>
-                         <span className="text-2xl" onClick={() => handlePopup(null)}>X CLOSE</span>
-                        <Post content={popup.photo} />
+                    <div style={{ background:'rgba(0,0,0,0.7)' }} className="fixed top-0 left-0 w-screen min-h-screen max-h-full overflow-y-scroll">
+                        <div style={{ minWidth:'720px' }} className='w-3/5 mx-auto bg-white'>
+                         <span style={{ color: 'rgba(50,50,50)',
+                            position:'fixed',
+                            right:"20px",
+                            top:"20px",
+                            fontSize:"55px",
+                            border:"2px solid black",
+                            borderRadius:'3px'
+                            }} className="text-2xl cursor-pointer p-3 text-align-center" onClick={() => handlePopup(null)}>X</span>
+                        <Post content={popup.photo} 
+
+                        //setPhotoWithDetails={setPhotoWithDetails}
+                        />
                          {/* {popup.photo.comments.map(item => 
                               <p key={`${item.comment}-${item.displayName}`} 
                                  className="mb-1" >

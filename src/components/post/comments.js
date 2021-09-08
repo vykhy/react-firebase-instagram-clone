@@ -6,6 +6,7 @@ import AddComment from './add-comments'
 
 export default function Comments({ docId, comments: allComments, posted, commentInput }){
 
+    //show all comments or no(3 comments and show all button)
     const [showAll, setShowAll] = useState(false)
     //all comments of the post
     const [comments, setComments] = useState(allComments)
@@ -24,7 +25,7 @@ export default function Comments({ docId, comments: allComments, posted, comment
                   <p key={`${item.comment}-${item.displayName}`} 
                     className="mb-1" >
                       {/* link to commenter profile */}
-                      <Link to={`/p/${item.displayName}`}>
+                      <Link to={`/p/${item.displayName}`} >
                           <span className="mr-1 font-bold">
                             {item.displayName}
                           </span>
@@ -46,6 +47,7 @@ export default function Comments({ docId, comments: allComments, posted, comment
               setComments={setComments}
               commentInput={commentInput}
             />
+            {/* show all comments if showall is true, with option to hide */}
             {showAll &&
             <p className="text-sm text-bold text-gray-base pl-4 mb-1 cursor-pointer" onClick={() => setShowAll(false)}>Hide all</p>}
             {showAll &&
