@@ -32,7 +32,7 @@ export default function Suggestions({ userId, following, loggedInUserDocId }){
         </div>
         
     ): profiles.length > 0 ?(
-        <div className='rounded flex flex-col' >
+        <div className='rounded flex flex-col sm:hidden' >
             <div className='text-sm flex items-center align-items justify-between mb-2'>
                 <p className='font-bold text-gray-base'>Suggestions for you</p>
             </div>

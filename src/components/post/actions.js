@@ -59,7 +59,7 @@ export default function Actions({ docId, totalLikes, likedPhoto,
                             handleToggleLiked()
                         }
                     }}
-                    className='w-8 mr-4 select-none cursor-pointer'
+                    className='w-8 h-8 mr-4 select-none cursor-pointer'
                     src={toggleLiked ? '/images/assets/heart-filled.png' : '/images/assets/heart.png'}
                     />
                     
@@ -72,7 +72,7 @@ export default function Actions({ docId, totalLikes, likedPhoto,
                             }
                         }}
                         src='/images/assets/comment.png' 
-                        className="w-8 mr-4 select-none cursor-pointer" />
+                        className="w-8 h-8 mr-4 select-none cursor-pointer" />
                 </div>
             </div>
             <div className='p-4 py-0'>
