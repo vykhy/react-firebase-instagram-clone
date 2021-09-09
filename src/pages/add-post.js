@@ -1,9 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react-dom'
 import Header from '../components/header'
 import FirebaseContext  from '../context/firebase'
+import UserContext from '../context/user'
 
 export default function AddPost(){
 
+    const {user} = useContext(UserContext)
     const {firebase} = useContext(FirebaseContext)
     //form inputs
     const [photo, setPhoto] = useState(null)
@@ -28,8 +31,9 @@ export default function AddPost(){
     useEffect(() => {
         notValid()
     }, [photo])
+
     //upload photo
-    const uploadPhoto = async (e) => {
+    const uploadPhoto = (e) => {
         e.preventDefault();
         
         console.log(photo)
@@ -46,8 +50,27 @@ export default function AddPost(){
             },() => {
                 uploadtask.snapshot.ref.getDownloadURL().then((url) =>{
                     setUrl(url)
-                })
-            })
+                    //save image data to firestore
+                    firebase.firestore().collection('photos').add(
+                        {
+                            caption : caption,
+                            userId: user.uid,
+                            photoId: Date.now(),
+                            imageSrc: url,
+                            comments: [],
+                            likes: [],
+                            dateCreated: Date.now()
+                        })
+                        .then((docRef) => {
+                            console.log("Document written with ID: ", docRef.id);
+                        })
+                        .catch((error) => {
+                            console.error("Error adding document: ", error);
+                        });
+                        setCaption('')
+                }
+            )}
+        )
     }
 
     return(
