@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react-dom'
 import Header from '../components/header'
 import FirebaseContext  from '../context/firebase'
 import UserContext from '../context/user'
@@ -61,9 +60,9 @@ export default function AddPost(){
                             likes: [],
                             dateCreated: Date.now()
                         })
-                        .then((docRef) => {
-                            console.log("Document written with ID: ", docRef.id);
-                        })
+                        // .then((docRef) => {
+                        //     console.log("Document written with ID: ", docRef.id);
+                        // })
                         .catch((error) => {
                             console.error("Error adding document: ", error);
                         });
