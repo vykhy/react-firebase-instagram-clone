@@ -42,11 +42,11 @@ useEffect(() => {
 
   return(
     <div className="container flex mt-5 mx-auto max-w-screen-md items-center h-screen">
-      <div className="flex w-3/5 ">
+      <div className="flex w-0 invisible md:w-3/5 md:visible">
         <img src="/images/iphone-with-profile.jpg"></img>
       </div>
-      <div className="flex flex-col w-2/5">
-        <div className="flex flex-col itm-center bg-white p-4 border border-gray-primary rounded mb-4">
+      <div className="mx-auto flex flex-col w-4/5 sm:w-3/5 md:w-2/5">
+        <div className="flex flex-col items-center bg-white p-4 border border-gray-primary rounded mb-4">
           <h1 className="flex justiy-center items-center w-full ">
             Login 
           </h1>
