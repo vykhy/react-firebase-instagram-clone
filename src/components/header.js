@@ -29,6 +29,11 @@ export default function Header(){
                     <div className='text-gray-700 text-center flex items-center align-items'>
                         {user ?(
                             <>
+                            <Link to={ROUTES.ADD_POST} aria-label='Add post'>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="text-black-light cursor-pointer w-8 mr-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                            </Link>
                             <Link to={ROUTES.DASHBOARD} aria-label='Instagram logo' >
                                 <svg xmlns="http://www.w3.org/2000/svg" 
                                 className="text-black-light cursor-pointer w-8 mr-6" 
@@ -68,7 +73,7 @@ export default function Header(){
                             </button>
                             <div className='flex item-center cursor-pointer'>
                                 <Link to={`/p/${user.displayName}`} >
-                                    <img className='rounded-full h-8 w-8 flex'
+                                    <img className='rounded-full h-8 w-8 object-cover flex'
                                     src = {`/images/avatars/${user.displayName}.jpg`}
                                     alt = {`${user.displayName} profile`}
                                     />

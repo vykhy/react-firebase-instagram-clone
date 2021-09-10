@@ -13,8 +13,8 @@ export default function Photos( { photos } ){
     const [photoList, setphotoList] = useState(null)
 
     useEffect(() => {
-        setphotoList(photos)
-    }, [])
+        photos && setphotoList(photos.sort((a, b) => b.dateCreated - a.dateCreated))
+    }, [photos])
     //track whether popup is active
     const [popup, setPopup] = useState({
         popup:false,
@@ -69,8 +69,8 @@ export default function Photos( { photos } ){
                     </div>
                 ) : (
                     photoList.map(photo => (
-                        <div className="relative group" key={photo.docId}>
-                            <img src={photo.imageSrc} alt={photo.caption}  />   
+                        <div className="relative group object-cover" key={photo.docId}>
+                            <img className="object-cover h-full w-full" src={photo.imageSrc} alt={photo.caption}  />   
                             <div className="absolute bottom-0 left-0 bg-gray-200 
                                 z-10 w-full justify-evenly items-center h-full 
                                 group-hover:flex hidden" onClick={() => handlePopup(photo)}>

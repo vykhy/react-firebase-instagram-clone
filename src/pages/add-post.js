@@ -13,6 +13,8 @@ export default function AddPost(){
 
     //upload progress
     const [progress, setProgress] = useState(null)
+    //to inform user
+    const [message, setMessage] = useState(null)
 
     function notValid(){
         if(photo && photo.type.includes('image')) return false
@@ -32,21 +34,23 @@ export default function AddPost(){
     const uploadPhoto = (e) => {
         e.preventDefault();
         
-        console.log(photo)
-
+        setMessage('starting upload...')
         const storage = firebase.storage().ref()
         const uploadtask = storage.child('public/' + photo.name).put(photo)
 
         uploadtask.on('state_changed',
             (snapshot) => {
+                setMessage('uploading...')
                 let progress = Math.round((snapshot.bytesTransferred/snapshot.totalBytes)) * 100
                 setProgress(progress)
+                console.log(progress)
             },(error)=>{
                 throw error
             },() => {
                 uploadtask.snapshot.ref.getDownloadURL().then((url) =>{
                     //setUrl(url)
                     //save image data to firestore
+                    setMessage('processing...')
                     firebase.firestore().collection('photos').add(
                         {
                             caption : caption,
@@ -62,8 +66,12 @@ export default function AddPost(){
                         // })
                         .catch((error) => {
                             console.error("Error adding document: ", error);
+                            setMessage('There was an error!')
                         });
+                        setProgress('100')
+                        setPhoto(null)
                         setCaption('')
+                        setMessage('Post added successfully')
                 }
             )}
         )
@@ -72,7 +80,7 @@ export default function AddPost(){
     return(
         <div>
             <Header />
-            <div className="container">
+            <div className="container mx-auto">
                 <form onSubmit={uploadPhoto} method='post' >
                 <input
                     aria-label="New post image"
@@ -84,6 +92,7 @@ export default function AddPost(){
                     aria-label="Enter new post caption"
                     type='text'
                     placeholder='your caption...'
+                    value={caption}
                     className='text-sm text-gray-base w-full mr-3 py-5 px-4 h2 border border-gray-primary rounded mb-2'
                     onChange= {({ target }) => setCaption(target.value)}
                 ></input>
@@ -94,7 +103,8 @@ export default function AddPost(){
                 ${isInvalid && 'opacity-50'}`}
                 >Create</button>
                 </form>
-                {progress}
+                <p className="w-full my-3 text-4xl text-center"> {progress && `${progress} %`}</p>
+                <p className="w-full my-3 text-3xl text-center text-blue-200">{message}</p>
             </div>
         </div>
          
