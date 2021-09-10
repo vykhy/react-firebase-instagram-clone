@@ -14,9 +14,6 @@ export default function AddPost(){
     //upload progress
     const [progress, setProgress] = useState(null)
 
-    //download url
-    const [url, setUrl] = useState('')
-
     function notValid(){
         if(photo && photo.type.includes('image')) return false
         return true
@@ -48,7 +45,7 @@ export default function AddPost(){
                 throw error
             },() => {
                 uploadtask.snapshot.ref.getDownloadURL().then((url) =>{
-                    setUrl(url)
+                    //setUrl(url)
                     //save image data to firestore
                     firebase.firestore().collection('photos').add(
                         {

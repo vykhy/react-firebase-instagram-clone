@@ -58,11 +58,11 @@ export default function Header(
     }, [user?.username, profileUserId])
 
     return(
-        <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
-            <div className='container flex justiy-center'>
+        <div className="container grid grid-cols-3 gap-4 justify-between mx-auto ">
+            <div className='container flex justify-center items-center'>
                 {profileUsername && (
                 <img
-                    className="rounded-full h-40 w-40 flex"
+                    className="rounded-full absolute w-24 sm:w-32 md:w-40 "
                     alt={`${profileUsername} profile picture`}
                     src={`/images/avatars/${profileUsername}.jpg`}
                 />  )}

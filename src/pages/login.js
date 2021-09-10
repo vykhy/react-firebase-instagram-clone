@@ -42,7 +42,7 @@ useEffect(() => {
 
   return(
     <div className="container flex mt-5 mx-auto max-w-screen-md items-center h-screen">
-      <div className="flex w-3/5">
+      <div className="flex w-3/5 ">
         <img src="/images/iphone-with-profile.jpg"></img>
       </div>
       <div className="flex flex-col w-2/5">
