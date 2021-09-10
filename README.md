@@ -5,7 +5,7 @@
 This is a project where I built an instagram clone using tailwind, firebase and react. It was a great learning experience and I learnt so much about tailwind, react, with all its 
 features and intricacies as well as firebase. 
 
-I mostly used php and laravel with its fully synchronous nature so it was a lot of fun!
+I mostly used php and laravel before with its fully synchronous nature, so it was a lot of fun!
 
 After completing the tutorial, I added additional functionalities and made several UI updates especially to make it mobile responsive. The two major ones would be photo upload using firebase storage, and the post pop-up view. There was a lot of frustration, mostly arising out of javascript asynchronity, state management and firestore data model but it got done.
 
