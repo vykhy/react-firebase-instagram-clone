@@ -1,5 +1,29 @@
 # Getting Started with Create React App
 
+#Intro
+
+This is a project where I built an instagram clone using tailwind, firebase and react. It was a great learning experience and I learnt so much about tailwind, react, with all its 
+features and intricacies as well as firebase. 
+
+I mostly used php and laravel with its fully synchronous nature so it was a lot of fun!
+
+After completing the tutorial, I added additional functionalities and made several UI updates especially to make it mobile responsive. The two major ones would be photo upload using firebase storage, and the post pop-up view. There was a lot of frustration, mostly arising out of javascript asynchronity, state management and firestore data model but it got done.
+
+Some of the project architecture is not optimal as the tutorial had written some functions with a single use in mind, and it called for some workarounds when reusing them later to add features, which could definitely have been improved by breaking down functions and updating the data model. But I did not want to meddle with the original code too much, nor did I want to rebuild it. Because if I were to rebuild it, I would prefer some other technology such as laravel with its much better object database model and relationships. And we can use Inertia if we wanted to make it an SPA too.
+
+With all that said, I had a lot of fun and it was a great learning experience. I learnt a lot about the specific technologies as well as the bigger picture of laying out and organizing a project. Especially with react, I feel like my eyes were opened on several of its features, common problems and solutions to the point where I am feeling quite confident to tackle big complicated projects.
+
+Biggest takeaways:
+1. react hooks and custom hooks
+2. firebase auth, firestore, storage and hosting
+3. complex conditional renderings
+4. state management
+5. proptypes
+6. dealing with asynchronity
+
+#CHECK IT OUT
+This app is hosted on firebase hosting at(https://instagram-clone-a6ecc.web.app/)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
  #getting started 
