@@ -54,31 +54,11 @@ export default function Photos( { photos } ){
         uid && photos && updatePhotoDetails()
     }, [photos, uid])
     
-    //console.log(photoList)
-    // async function getuserinfo(){
-    //     let [userl] = await getUserByUserId(popup.photo.userId)
-    //     setusername(userl.username)
-    // }
-    //
-    // useEffect(() => {
-    //     async function getData(){
-    //         if(popup.popup && !popup.photo.userLikedPhoto){
-    //             getuserinfo()
-
-    //             setPopup({popup: true, photo: { username: username,userLikedPhoto: userLikedPhoto, ...popup.photo, }}
-    //             )
-    //             console.log(popup)
-
-    //         }
-    //     }
-    //     getData()
-        
-    // }, [popup.photo])
-
     function handlePopup (photo) {
         setPopup({popup: !popup.popup,
             photo: photo || null}
         )
+        document.getElementById('popup')&& document.getElementById('popup').focus()
     }
     return(
         <div className="container mx-auto h-16 border-t border-gray-primary mt-12 pt-4">
@@ -93,8 +73,8 @@ export default function Photos( { photos } ){
                             <img src={photo.imageSrc} alt={photo.caption}  />   
                             <div className="absolute bottom-0 left-0 bg-gray-200 
                                 z-10 w-full justify-evenly items-center h-full 
-                                bg-black-faded group-hover:flex hidden" onClick={() => handlePopup(photo)}>
-                                <p className='flex items-center text-white font-bold'>
+                                group-hover:flex hidden" onClick={() => handlePopup(photo)}>
+                                <p className='flex items-center text-white font-bold invisible md:visible'>
                                     <svg 
                                         xmlns="https://www.w3.org/2000/svg" 
                                         viewBox='0 0 20 20'    
@@ -109,7 +89,7 @@ export default function Photos( { photos } ){
                                     </svg>
                                     {photo.likes.length}
                                 </p>
-                                <p className="flex items-center text-white font-bold">
+                                <p className="flex items-center text-white font-bold invisible md:visible">
                                     <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20"
@@ -131,33 +111,15 @@ export default function Photos( { photos } ){
                 {
                     popup.popup ? (
                     <div style={{ background:'rgba(0,0,0,0.7)' }} className="fixed top-0 left-0 w-screen min-h-screen max-h-full overflow-y-scroll">
-                        <div style={{ minWidth:'720px' }} className='w-3/5 mx-auto bg-white'>
-                         <span style={{ color: 'rgba(50,50,50)',
+                        <div id="popup" className='w-screen md:w-3/5 lg:w-6/12 mx-auto bg-white'>
+                         <span style={{ 
                             position:'fixed',
                             right:"20px",
-                            top:"20px",
+                            // top:"20px",
                             fontSize:"55px",
-                            border:"2px solid black",
-                            borderRadius:'3px'
-                            }} className="text-2xl cursor-pointer p-3 text-align-center" onClick={() => handlePopup(null)}>X</span>
-                        <Post content={popup.photo} 
-
-                        //setPhotoWithDetails={setPhotoWithDetails}
+                            }} className="text-2xl top-3 md:top-6 text-gray-base md:text-white cursor-pointer p-3 text-align-center" onClick={() => handlePopup(null)}>X</span>
+                        <Post  content={popup.photo} 
                         />
-                         {/* {popup.photo.comments.map(item => 
-                              <p key={`${item.comment}-${item.displayName}`} 
-                                 className="mb-1" >
-                                 link to commenter profile
-                                 <Link to={`/p/${item.displayName}`}>
-                                     <span className="mr-1 font-bold">
-                                        {item.displayName}
-                                     </span>
-                                 </Link>
-                                 <span>
-                                     {item.comment}
-                                 </span>
-                             </p>
-                         )}*/}
                          
                         </div>
 
